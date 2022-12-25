@@ -1,6 +1,11 @@
 import bot from "./assets/bot.svg";
 import user from "./assets/user.svg";
 
+const isDev = false;
+const fetchLink = isDev
+  ? "http://localhost:5000"
+  : "https://openaichatserver.onrender.com";
+
 const form = document.querySelector("form");
 const chatContainer = document.querySelector("#chat-container");
 
@@ -90,7 +95,7 @@ const handleSubmit = async (e) => {
 
   // fetch data from server
   if (!isThereAHardcodedMessage) {
-    const response = await fetch("https://openaichatserver.onrender.com", {
+    const response = await fetch(fetchLink, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -123,7 +128,6 @@ form.addEventListener("submit", handleSubmit);
 
 form.addEventListener("keyup", (e) => {
   if (e.keyCode === 13 && form.elements.prompt.value.trim().length > 0) {
-    console.log(form.elements.prompt.value.length);
     handleSubmit(e);
   } else if (e.keyCode === 13) {
     form.elements.prompt.value = "";
