@@ -90,7 +90,7 @@ const handleSubmit = async (e) => {
 
   // fetch data from server
   if (!isThereAHardcodedMessage) {
-    const response = await fetch("http://localhost:5000", {
+    const response = await fetch("https://openaichatserver.onrender.com", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -118,8 +118,21 @@ const handleSubmit = async (e) => {
 };
 
 form.addEventListener("submit", handleSubmit);
+
+// handle enter key, but only if there is a prompt in the textarea
+
 form.addEventListener("keyup", (e) => {
-  if (e.keyCode === 13) {
+  if (e.keyCode === 13 && form.elements.prompt.value.trim().length > 0) {
+    console.log(form.elements.prompt.value.length);
     handleSubmit(e);
+  } else if (e.keyCode === 13) {
+    form.elements.prompt.value = "";
   }
 });
+
+// form.addEventListener("keyup", (e) => { if (e.keyCode === 13 && chatContainer.innerHTML.length > 0) {
+//     handleSubmit(e);
+//   } else {
+//     chatContainer.innerHTML = "";
+//   }
+// });
